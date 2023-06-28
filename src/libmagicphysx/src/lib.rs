@@ -52,13 +52,14 @@ mod tests {
         file.flush().unwrap();
     }
 
-    // cargo test move_target_lib -- win-x64/osx/linux --nocapture
+    // cargo test move_target_lib -- x86_64-pc-windows-msvc win-x64 --nocapture
     #[test]
     fn move_target_lib() {
         let args: Vec<String> = env::args().collect();
         // 0: exe path
         // 1: move_target_lib
-        // 2: win/osx/linux
+        // 2: x86_64-pc-windows-msvc
+        // 3: win-x64
         // 3: --nocapture
 
         if args[1] != "move_target_lib" {
@@ -69,18 +70,21 @@ mod tests {
         let mut path = std::env::current_dir().unwrap();
         println!("current_dir: {}", path.display());
 
-        let ext = if args[2].contains("linux-") {
+        let ext = if args[3].contains("linux-") {
             "so"
-        } else if args[2].contains("osx-") {
+        } else if args[3].contains("osx-") {
             "dylib"
         } else {
             "dll"
         };
 
-        path.push(format!("target/release/libmagicphysx.{}", ext));
+        path.push(format!("target/{}/release/libmagicphysx.{}", args[2], ext));
 
         let mut to = std::env::current_dir().unwrap();
-        to.push(format!("../MagicPhysX/runtimes/win-x64/native/libmagicphysx.{}", ext));
+        to.push(format!(
+            "../MagicPhysX/runtimes/{}/native/libmagicphysx.{}",
+            args[3], ext
+        ));
 
         println!("move from: {} to: {}", path.display(), to.display());
         std::fs::rename(path, to).unwrap();

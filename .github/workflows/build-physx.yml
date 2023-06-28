@@ -17,9 +17,37 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: cargo test update_package_version -- ${{ inputs.physxversion }} --nocapture
-      - run: cargo build --release
-      - run: cargo test move_target_lib -- win-x64 --nocapture
+      - run: cargo build --target x86_64-pc-windows-msvc --release
+      - run: cargo test move_target_lib -- x86_64-pc-windows-msvc win-x64 --nocapture
       - run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git commit -m "Update cargo.toml physx-sys version to ${{ inputs.physxversion }}" -a
+
+  # Rust Platform target https://doc.rust-lang.org/nightly/rustc/platform-support.html
+
+  # linux:
+  #   needs: [update-package]
+  #   strategy:
+  #     matrix:
+  #       target: ["x64", "arm64"]
+  #   runs-on: ubuntu-latest
+  #     timeout-minutes: 10
+  #     defaults:
+  #       run:
+  #         working-directory: ./src/libmagicphysx
+  #     steps:
+  #       - uses: actions/checkout@v3
+  #       - run: cargo test update_package_version -- ${{ inputs.physxversion }} --nocapture
+  #       - run: cargo build --target  --release
+  #       - run: cargo test move_target_lib -- win-x64 --nocapture
+  #       - run: |
+  #           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+  #           git config --local user.name "github-actions[bot]"
+  #           git commit -m "Update cargo.toml physx-sys version to ${{ inputs.physxversion }}" -a    
+
+
+  # macos:
+
+
+  # windows:
