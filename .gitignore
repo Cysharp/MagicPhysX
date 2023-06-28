@@ -7,3 +7,5 @@ src/libmagicphysx/target
 
 .DS_Store
 .idea/
+
+!src/MagicPhysX/runtimes/**
