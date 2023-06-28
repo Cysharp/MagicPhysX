@@ -23,6 +23,7 @@ jobs:
       - run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
+          git add --all
           git commit -m "Update cargo.toml physx-sys version to ${{ inputs.physxversion }}" -a
 
   # Rust Platform target https://doc.rust-lang.org/nightly/rustc/platform-support.html
