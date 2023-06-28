@@ -17,12 +17,22 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: cargo test update_package_version -- ${{ inputs.physxversion }} --nocapture
-      - run: |
+      
+      - name: Check update
+        id: check_update
+        run: git diff --exit-code || echo "changed=1" 
+      
+      - name: Commit files
+        id: commit
+        if: ${{ steps.check_update.outputs.changed == '1' }}
+        run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add --all
           git commit -m "Update cargo.toml physx-sys version to ${{ inputs.physxversion }}" -a
+      
       - name: Push changes
+        if: ${{ steps.check_update.outputs.changed == '1' }}
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
