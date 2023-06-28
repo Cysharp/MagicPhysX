@@ -1,0 +1,22 @@
+name: Build-PhysX
+
+on:
+  workflow_dispatch:
+    inputs:
+      physxversion:
+        description: "physx-sys version. (sample 0.11.1)"
+        required: true
+
+jobs:
+  update-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v3
+      - run: cargo test update_package_version -- ${{ inputs.physxversion }} --nocapture
+      - run: cargo build --release
+      - run: cargo test move_target_lib -- win-x64 --nocapture
+      - run: |
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git config --local user.name "github-actions[bot]"
+          git commit -m "Update cargo.toml physx-sys version to ${{ inputs.physxversion }}" -a
