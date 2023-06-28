@@ -1,0 +1,9 @@
+src/libmagicphysx/target
+**/Cargo.lock
+
+.vs/
+**/bin
+**/obj
+
+.DS_Store
+.idea/

@@ -1,0 +1,41 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.5.33414.496
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MagicPhysX", "src\MagicPhysX\MagicPhysX.csproj", "{93929A68-DEC0-420A-A717-F9DEB8ADF654}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{AD75C86C-CCF6-4F9C-B692-9E13BF5EDBDC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sample", "sample", "{A824F7B6-B908-40A6-98C7-856ED23AD38C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sandbox", "sandbox", "{51742C40-9288-4F98-A6EE-FC655D5D7BFC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleSandbox", "sandbox\ConsoleSandbox\ConsoleSandbox.csproj", "{6B0F24F7-AD2A-467C-B8AE-3A752599784B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93929A68-DEC0-420A-A717-F9DEB8ADF654}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93929A68-DEC0-420A-A717-F9DEB8ADF654}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93929A68-DEC0-420A-A717-F9DEB8ADF654}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93929A68-DEC0-420A-A717-F9DEB8ADF654}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B0F24F7-AD2A-467C-B8AE-3A752599784B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6B0F24F7-AD2A-467C-B8AE-3A752599784B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6B0F24F7-AD2A-467C-B8AE-3A752599784B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B0F24F7-AD2A-467C-B8AE-3A752599784B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{93929A68-DEC0-420A-A717-F9DEB8ADF654} = {AD75C86C-CCF6-4F9C-B692-9E13BF5EDBDC}
+		{6B0F24F7-AD2A-467C-B8AE-3A752599784B} = {51742C40-9288-4F98-A6EE-FC655D5D7BFC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2C800469-2418-4B4A-84C6-A50184E71234}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "type_traits": "cpp",
+        "xtr1common": "cpp"
+    },
+    "C_Cpp.errorSquiggles": "disabled",
+    "rust-analyzer.linkedProjects": [
+        ".\\Cargo.toml"
+    ]
+}

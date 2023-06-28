@@ -1,0 +1,14 @@
+[package]
+name = "libmagicphysx"
+version = "1.0.0"
+edition = "2021"
+
+[lib]
+name = "libmagicphysx"
+crate-type = ["cdylib"]
+
+[dependencies]
+physx-sys = "0.11.1"
+
+[build-dependencies]
+csbindgen = "1.7.3"
