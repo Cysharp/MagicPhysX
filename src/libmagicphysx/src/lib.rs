@@ -70,12 +70,18 @@ mod tests {
         let mut path = std::env::current_dir().unwrap();
         println!("current_dir: {}", path.display());
 
-        let ext = if args[3].contains("linux-") {
-            "so"
+        let file = if args[3].contains("linux-") {
+            "libmagicphysx.so"
         } else if args[3].contains("osx-") {
-            "dylib"
+            "libmagicphysx.dylib"
         } else {
-            "dll"
+            "magicphysx.dll"
+        };
+
+        let to_file = if args[3].contains("win-") {
+            format!("lib{}", file)
+        } else {
+            file.to_string()
         };
 
         path.push(format!("target/{}/release/", args[2]));
@@ -86,12 +92,12 @@ mod tests {
             println!("File: {}", p.unwrap().path().display())
         }
 
-        path.push(format!("libmagicphysx.{}", ext));
+        path.push(file);
 
         let mut to = std::env::current_dir().unwrap();
         to.push(format!(
-            "../MagicPhysX/runtimes/{}/native/libmagicphysx.{}",
-            args[3], ext
+            "../MagicPhysX/runtimes/{}/native/{}",
+            args[3], to_file
         ));
 
         println!("move from: {} to: {}", path.display(), to.display());

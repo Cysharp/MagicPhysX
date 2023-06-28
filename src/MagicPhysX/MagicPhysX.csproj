@@ -31,11 +31,11 @@
     </ItemGroup>
 
     <!-- for debug perpose, if exists in debug, copy it -->
-    <ItemGroup Condition="'$(Configuration)' == 'Debug' and Exists('../libmagicphysx/target/debug/libmagicphysx.dll')">
-        <None Include="../libmagicphysx/target/debug/libmagicphysx.dll">
+    <ItemGroup Condition="'$(Configuration)' == 'Debug' and Exists('../libmagicphysx/target/debug/magicphysx.dll')">
+        <None Include="../libmagicphysx/target/debug/magicphysx.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
-        <None Include="../libmagicphysx/target/debug/libmagicphysx.pdb">
+        <None Include="../libmagicphysx/target/debug/magicphysx.pdb">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
     </ItemGroup>
