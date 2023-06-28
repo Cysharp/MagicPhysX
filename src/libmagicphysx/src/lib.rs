@@ -78,7 +78,15 @@ mod tests {
             "dll"
         };
 
-        path.push(format!("target/{}/release/libmagicphysx.{}", args[2], ext));
+        path.push(format!("target/{}/release/", args[2]));
+
+        // print directory-files for CI debugging
+        let paths = fs::read_dir(path.clone()).unwrap();
+        for p in paths {
+            println!("File: {}", p.unwrap().path().display())
+        }
+
+        path.push(format!("libmagicphysx.{}", ext));
 
         let mut to = std::env::current_dir().unwrap();
         to.push(format!(
