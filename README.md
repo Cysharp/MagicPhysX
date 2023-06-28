@@ -171,7 +171,7 @@ Native Build Instruction
 ---
 require [Rust](https://www.rust-lang.org/).
 
-Open directory `src\MagicPhysX-physx`.
+Open directory `src\libmagicphysx`.
 Run `cargo build`.
 
 License
