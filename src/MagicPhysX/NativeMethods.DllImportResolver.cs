@@ -22,11 +22,6 @@ namespace MagicPhysX
             if (libraryName == __DllName)
             {
 #if DEBUG
-                if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows) && libraryName.StartsWith("lib"))
-                {
-                    libraryName = libraryName.Substring(3); // trim "lib"
-                }
-
                 var combinedPath = Path.Combine(AppContext.BaseDirectory, libraryName);
                 if (File.Exists(combinedPath) || File.Exists(combinedPath + ".dll"))
                 {
