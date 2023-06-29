@@ -79,13 +79,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
-          with:
-            name: win-x64
-            path: .src/MagicPhysX/runtimes/win-x64/native/libmagicphysx.dll
+        with:
+          name: win-x64
+          path: .src/MagicPhysX/runtimes/win-x64/native/libmagicphysx.dll
       - uses: actions/download-artifact@v3
-          with:
-            name: linux-x64
-            path: .src/MagicPhysX/runtimes/linux-x64/native/libmagicphysx.so
+        with:
+          name: linux-x64
+          path: .src/MagicPhysX/runtimes/linux-x64/native/libmagicphysx.so
       - run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
