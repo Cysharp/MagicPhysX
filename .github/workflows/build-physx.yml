@@ -54,7 +54,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: target/x86_64-pc-windows-msvc/release/magicphysx.dll
+          path: ./src/libmagicphysx/target/x86_64-pc-windows-msvc/release/magicphysx.dll
 
   linux-x64:
     needs: [update-package]
@@ -70,7 +70,7 @@ jobs:
       - uses: actions/upload-artifact@v3
         with:
           name: artifact
-          path: target/x86_64-unknown-linux-gnu/release/libmagicphysx.so
+          path: ./src/libmagicphysx/target/x86_64-unknown-linux-gnu/release/libmagicphysx.so
 
   #   - uses: actions/download-artifact@v3
   #       with:
