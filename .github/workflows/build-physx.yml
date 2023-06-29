@@ -72,6 +72,22 @@ jobs:
           name: linux-x64
           path: ./src/libmagicphysx/target/x86_64-unknown-linux-gnu/release/libmagicphysx.so
 
+  linux-arm64:
+    needs: [update-package]
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ./src/libmagicphysx
+    steps:
+      - uses: actions/checkout@v3
+      - run: rustup target add aarch64-unknown-linux-gnu
+      - run: cargo build --target aarch64-unknown-linux-gnu --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: linux-arm64
+          path: ./src/libmagicphysx/target/aarch64-unknown-linux-gnu/release/libmagicphysx.so
+
   osx-x64:
     needs: [update-package]
     runs-on: macos-latest
@@ -88,10 +104,26 @@ jobs:
           name: osx-x64
           path: ./src/libmagicphysx/target/x86_64-apple-darwin/release/libmagicphysx.dylib
 
+  osx-arm64:
+    needs: [update-package]
+    runs-on: macos-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ./src/libmagicphysx
+    steps:
+      - uses: actions/checkout@v3
+      - run: rustup target add aarch64-apple-darwin
+      - run: cargo build --target aarch64-apple-darwin --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: osx-arm64
+          path: ./src/libmagicphysx/target/aarch64-apple-darwin/release/libmagicphysx.dylib
+
   # download binary and git push
 
   git-push:
-    needs: [win-x64, linux-x64, osx-x64]
+    needs: [win-x64, linux-x64, linux-arm64, osx-x64, osx-arm64]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -107,8 +139,16 @@ jobs:
           path: src/MagicPhysX/runtimes/linux-x64/native
       - uses: actions/download-artifact@v3
         with:
+          name: linux-arm64
+          path: src/MagicPhysX/runtimes/linux-arm64/native
+      - uses: actions/download-artifact@v3
+        with:
           name: osx-x64
           path: src/MagicPhysX/runtimes/osx-x64/native
+      - uses: actions/download-artifact@v3
+        with:
+          name: osx-arm64
+          path: src/MagicPhysX/runtimes/osx-arm64/native
       - run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
