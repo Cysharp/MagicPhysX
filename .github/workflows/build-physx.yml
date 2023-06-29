@@ -69,11 +69,29 @@ jobs:
       - run: cargo build --target x86_64-unknown-linux-gnu --release
       - uses: actions/upload-artifact@v3
         with:
-          name: artifact
+          name: linux-x64
           path: ./src/libmagicphysx/target/x86_64-unknown-linux-gnu/release/libmagicphysx.so
 
+  osx-x64:
+    needs: [update-package]
+    runs-on: macos-latest
+    timeout-minutes: 30
+    defaults:
+      run:
+        working-directory: ./src/libmagicphysx
+    steps:
+      - uses: actions/checkout@v3
+      - run: rustup target add x86_64-apple-darwin
+      - run: cargo build --target x86_64-apple-darwin --release
+      - uses: actions/upload-artifact@v3
+        with:
+          name: osx-x64
+          path: ./src/libmagicphysx/target/x86_64-apple-darwin/release/libmagicphysx.dylib
+
+  # download binary and git push
+
   git-push:
-    needs: [win-x64, linux-x64]
+    needs: [win-x64, linux-x64, osx-x64]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -86,6 +104,10 @@ jobs:
         with:
           name: linux-x64
           path: .src/MagicPhysX/runtimes/linux-x64/native/libmagicphysx.so
+      - uses: actions/download-artifact@v3
+        with:
+          name: osx-x64
+          path: .src/MagicPhysX/runtimes/osx-x64/native/libmagicphysx.dylib
       - run: |
           git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
@@ -96,63 +118,3 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           branch: ${{ github.ref }}
-
-
-
-  #     - run: cargo test move_target_lib -- x86_64-pc-windows-msvc win-x64 --nocapture
-  #     - run: |
-  #         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-  #         git config --local user.name "github-actions[bot]"
-  #         git add --all
-  #         git commit -m "Update windows-x64 physx lib runtime" -a
-  #     - name: Push changes
-  #       uses: ad-m/github-push-action@master
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         branch: ${{ github.ref }}
-
-  # linux-x64:
-  #   needs: [update-package]
-  #   runs-on: ubuntu-latest
-  #   timeout-minutes: 30
-  #   defaults:
-  #     run:
-  #       working-directory: ./src/libmagicphysx
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: rustup target add x86_64-unknown-linux-gnu
-  #     - run: cargo build --target x86_64-unknown-linux-gnu --release
-  #     - run: cargo test move_target_lib -- x86_64-unknown-linux-gnu linux-x64 --nocapture
-  #     - run: |
-  #         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-  #         git config --local user.name "github-actions[bot]"
-  #         git add --all
-  #         git commit -m "Update linux-x64 physx lib runtime" -a
-  #     - name: Push changes
-  #       uses: ad-m/github-push-action@master
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         branch: ${{ github.ref }}
-
-  # osx-x64:
-  #   needs: [update-package]
-  #   runs-on: macos-latest
-  #   timeout-minutes: 30
-  #   defaults:
-  #     run:
-  #       working-directory: ./src/libmagicphysx
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - run: rustup target add x86_64-apple-darwin
-  #     - run: cargo build --target x86_64-apple-darwin --release
-  #     - run: cargo test move_target_lib -- x86_64-apple-darwin osx-x64 --nocapture
-  #     - run: |
-  #         git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-  #         git config --local user.name "github-actions[bot]"
-  #         git add --all
-  #         git commit -m "Update osx-x64 physx lib runtime" -a
-  #     - name: Push changes
-  #       uses: ad-m/github-push-action@master
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         branch: ${{ github.ref }}
