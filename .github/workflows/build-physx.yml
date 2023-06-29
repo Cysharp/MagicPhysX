@@ -53,7 +53,7 @@ jobs:
       - run: cargo build --target x86_64-pc-windows-msvc --release
       - uses: actions/upload-artifact@v3
         with:
-          name: artifact
+          name: win-x64
           path: ./src/libmagicphysx/target/x86_64-pc-windows-msvc/release/magicphysx.dll
 
   linux-x64:
@@ -72,10 +72,30 @@ jobs:
           name: artifact
           path: ./src/libmagicphysx/target/x86_64-unknown-linux-gnu/release/libmagicphysx.so
 
-  #   - uses: actions/download-artifact@v3
-  #       with:
-  #         name: artifact
-  #         path: _tmp
+  git-push:
+    needs: [win-x64, linux-x64]
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    - uses: actions/download-artifact@v3
+        with:
+          name: win-x64
+          path: .src/MagicPhysX/runtimes/win-x64/native/libmagicphysx.dll
+    - uses: actions/download-artifact@v3
+        with:
+          name: linux-x64
+          path: .src/MagicPhysX/runtimes/linux-x64/native/libmagicphysx.so
+    - run: |
+        git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --local user.name "github-actions[bot]"
+        git add --all
+        git commit -m "Update physx lib runtime" -a
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        branch: ${{ github.ref }}
+
+
 
   #     - run: cargo test move_target_lib -- x86_64-pc-windows-msvc win-x64 --nocapture
   #     - run: |
