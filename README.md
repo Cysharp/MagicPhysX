@@ -106,7 +106,7 @@ MagicPhysX uses [physx-rs](https://github.com/EmbarkStudios/physx-rs) C binding(
 
 MagicPhysX can enable [PhysX Visual Debugger](https://developer.nvidia.com/physx-visual-debugger) to debug physcs scene.
 
-![image](https://github.com/Cysharp/MagicPhysX/assets/46207/83b6b7c7-c8d6-4ab3-bd5e-f85905831d43)
+![image](https://github.com/Cysharp/MagicPhysX/assets/46207/2018e821-41c4-44a2-aac6-f0705993ab9b)
 
 To use pvd, add this instruction on scene init.
 
