@@ -30,18 +30,22 @@ namespace MagicPhysX
 #endif
 
                 var path = "runtimes/";
+                var extension = "";
+
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
                     path += "win-";
-
+                    extension = ".dll";
                 }
                 else if (RuntimeInformation.IsOSPlatform(OSPlatform.OSX))
                 {
                     path += "osx-";
+                    extension = ".dylib";
                 }
                 else
                 {
                     path += "linux-";
+                    extension = ".so";
                 }
 
                 if (RuntimeInformation.OSArchitecture == Architecture.X86)
@@ -57,7 +61,7 @@ namespace MagicPhysX
                     path += "arm64";
                 }
 
-                path += "/native/" + __DllName;
+                path += "/native/" + __DllName + extension;
 
                 return NativeLibrary.Load(Path.Combine(AppContext.BaseDirectory, path), assembly, searchPath);
             }
