@@ -1,4 +1,9 @@
 # MagicPhysX
+
+[![NuGet](https://img.shields.io/nuget/v/MagicPhysX.svg)](https://www.nuget.org/packages/MagicPhysX)
+[![GitHub Actions](https://github.com/Cysharp/MagicPhysX/workflows/Build-Debug/badge.svg)](https://github.com/Cysharp/MagicPhysX/actions)
+[![Releases](https://img.shields.io/github/release/Cysharp/MagicPhysX.svg)](https://github.com/Cysharp/MagicPhysX/releases)
+
 .NET PhysX 5 binding to all platforms(win-x64, osx-x64, osx-arm64, linux-x64, linux-arm64) for 3D engine, deep learning, dedicated server of gaming. This library is built on top of [NVIDIA PhysX 5](https://github.com/NVIDIA-Omniverse/PhysX) and [physx-rs](https://github.com/EmbarkStudios/physx-rs).
 
 Use case:
