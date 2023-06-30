@@ -92,7 +92,7 @@ PxDefaultCpuDispatcher_release_mut(dispatcher);
 PxPhysics_release_mut(physics);
 ```
 
-Other samples(`FixedJoint`, `RaycastSingle`, `BricksDoubleDomino`) are exist in [ConsoleSandbox](https://github.com/Cysharp/MagicPhysX/tree/main/sandbox/ConsoleSandbox).
+Other samples(`FixedJoint`, `DistanceJoint`, `SphericalJoint`, `RevoluteJoint`,`RaycastSingle`, `BricksDoubleDomino`, `Geometries`) are exist in [ConsoleSandbox](https://github.com/Cysharp/MagicPhysX/tree/main/sandbox/ConsoleSandbox).
 
 ### Document
 
