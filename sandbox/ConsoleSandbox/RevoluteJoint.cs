@@ -1,9 +1,10 @@
 ﻿using MagicPhysX;
+using System.Runtime.CompilerServices;
 using static MagicPhysX.NativeMethods;
 
 namespace ConsoleSandbox;
 
-public static class BricksDoubleDomino
+public static class RevoluteJoint
 {
     public static unsafe void Run()
     {
@@ -55,69 +56,90 @@ public static class BricksDoubleDomino
 
         PxScene_addActor_mut(scene, (PxActor*)groundPlane, null);
 
-        // sphere
-        var sphereVec = new PxVec3
+        // box1
+        var box1Position = new PxVec3
         {
             x = 0.0f,
             y = 10.0f,
             z = 0.0f
         };
 
-        var transform1 = PxTransform_new_1(&sphereVec);
-        var transform2 = PxTransform_new_2(PxIDENTITY.PxIdentity);
-        var sphereGeo = PxSphereGeometry_new(1.0f);
+        var box1Transform = PxTransform_new_1(&box1Position);
+        var box1ShapeOffset = PxTransform_new_2(PxIDENTITY.PxIdentity);
+        var box1Geometry = PxBoxGeometry_new(2.0f, 12.0f, 2.0f);
 
         physics->CreateShapeMut(
-            (PxGeometry*)&sphereGeo,
+            (PxGeometry*)&box1Geometry,
             material,
             false,
             PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
 
-        var sphere = phys_PxCreateDynamic(
+        var box1 = phys_PxCreateStatic(
             physics,
-            &transform1,
-            (PxGeometry*)&sphereGeo,
+            &box1Transform,
+            (PxGeometry*)&box1Geometry,
             material,
-            10.0f,
-            &transform2);
+            &box1ShapeOffset);
 
-        PxScene_addActor_mut(scene, (PxActor*)sphere, null);
+        PxScene_addActor_mut(scene, (PxActor*)box1, null);
 
-        // boxes
-        for (var i = 0; i < 30; i++)
+        // box2
+        var box2Position = new PxVec3
         {
-            var boxVec = new PxVec3
-            {
-                x = 1f + i * 3.05f,
-                y = 1.5f,
-                z = 0.0f
-            };
+            x = 12.0f,
+            y = 20.0f,
+            z = 4.0f
+        };
 
-            var boxTransform1 = PxTransform_new_1(&boxVec);
-            var boxTransform2 = PxTransform_new_2(PxIDENTITY.PxIdentity);
-            var boxGeo = PxBoxGeometry_new(0.5f, 1.5f, 1.0f);
+        var box2Transform = PxTransform_new_1(&box2Position);
+        var box2ShapeOffset = PxTransform_new_2(PxIDENTITY.PxIdentity);
+        var box2Geometry = PxBoxGeometry_new(10.0f, 2.0f, 6.0f);
 
-            physics->CreateShapeMut(
-                (PxGeometry*)&boxGeo,
-                material,
-                false,
-                PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
+        physics->CreateShapeMut(
+            (PxGeometry*)&box2Geometry,
+            material,
+            false,
+            PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
 
-            var box = phys_PxCreateDynamic(
-                physics,
-                &boxTransform1,
-                (PxGeometry*)&boxGeo,
-                material,
-                10.0f,
-                &boxTransform2);
+        var box2 = phys_PxCreateDynamic(
+            physics,
+            &box2Transform,
+            (PxGeometry*)&box2Geometry,
+            material,
+            1.0f,
+            &box2ShapeOffset);
 
-            PxScene_addActor_mut(scene, (PxActor*)box, null);
-        }
+        PxScene_addActor_mut(scene, (PxActor*)box2, null);
+
+        // joint1
+        var anchor1 = new PxVec3
+        {
+            x = 2.0f,
+            y = 10.0f,
+            z = 0.0f
+        };
+
+        var anchor2 = new PxVec3
+        {
+            x = -10.0f,
+            y = 0.0f,
+            z = -4.0f
+        };
+
+        var transform1 = PxTransform_new_1((PxVec3*)Unsafe.AsPointer(ref anchor1));
+        var transform2 = PxTransform_new_1((PxVec3*)Unsafe.AsPointer(ref anchor2));
+
+        var joint1 = phys_PxRevoluteJointCreate(
+            physics,
+            (PxRigidActor*)box1,
+            &transform1,
+            (PxRigidActor*)box2,
+            &transform2);
 
         // simulate
         Console.WriteLine("Start simulate");
 
-        for (var i = 0; i < 1400; i++)
+        for (var i = 0; i < 300; i++)
         {
             PxScene_simulate_mut(scene, 1.0f / 30.0f, null, null, 0, true);
             uint error = 0;

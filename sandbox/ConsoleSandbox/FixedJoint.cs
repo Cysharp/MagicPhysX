@@ -250,6 +250,7 @@ public static class FixedJoint
             Console.SetCursorPosition(0, Console.CursorTop);
             Console.Write($"Frame: {i}");
         }
+
         Console.WriteLine("\nDone");
     }
 }
