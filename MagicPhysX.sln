@@ -17,6 +17,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{89E81403
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicPhysX.Tests", "tests\MagicPhysX.Tests\MagicPhysX.Tests.csproj", "{BA67B868-408A-4F95-9669-D012F71BBC05}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MagicPhysX.Toolkit", "samples\MagicPhysX.Toolkit\MagicPhysX.Toolkit.csproj", "{56AFF15C-EABE-4C09-8386-FDE720287EB3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{BA67B868-408A-4F95-9669-D012F71BBC05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BA67B868-408A-4F95-9669-D012F71BBC05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BA67B868-408A-4F95-9669-D012F71BBC05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56AFF15C-EABE-4C09-8386-FDE720287EB3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56AFF15C-EABE-4C09-8386-FDE720287EB3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56AFF15C-EABE-4C09-8386-FDE720287EB3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56AFF15C-EABE-4C09-8386-FDE720287EB3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{93929A68-DEC0-420A-A717-F9DEB8ADF654} = {AD75C86C-CCF6-4F9C-B692-9E13BF5EDBDC}
 		{6B0F24F7-AD2A-467C-B8AE-3A752599784B} = {51742C40-9288-4F98-A6EE-FC655D5D7BFC}
 		{BA67B868-408A-4F95-9669-D012F71BBC05} = {89E81403-A514-4F30-A02E-E8C157FAAF16}
+		{56AFF15C-EABE-4C09-8386-FDE720287EB3} = {A824F7B6-B908-40A6-98C7-856ED23AD38C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C800469-2418-4B4A-84C6-A50184E71234}
