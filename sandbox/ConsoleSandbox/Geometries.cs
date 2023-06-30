@@ -1,9 +1,10 @@
 ﻿using MagicPhysX;
+using System.Runtime.CompilerServices;
 using static MagicPhysX.NativeMethods;
 
 namespace ConsoleSandbox;
 
-public static class BricksDoubleDomino
+public static class Geometries
 {
     public static unsafe void Run()
     {
@@ -59,12 +60,12 @@ public static class BricksDoubleDomino
         var sphereVec = new PxVec3
         {
             x = 0.0f,
-            y = 10.0f,
+            y = 3.0f,
             z = 0.0f
         };
 
-        var transform1 = PxTransform_new_1(&sphereVec);
-        var transform2 = PxTransform_new_2(PxIDENTITY.PxIdentity);
+        var sphereTransform = PxTransform_new_1(&sphereVec);
+        var sphereShapeOffset = PxTransform_new_2(PxIDENTITY.PxIdentity);
         var sphereGeo = PxSphereGeometry_new(1.0f);
 
         physics->CreateShapeMut(
@@ -75,49 +76,104 @@ public static class BricksDoubleDomino
 
         var sphere = phys_PxCreateDynamic(
             physics,
-            &transform1,
+            &sphereTransform,
             (PxGeometry*)&sphereGeo,
             material,
             10.0f,
-            &transform2);
+            &sphereShapeOffset);
 
         PxScene_addActor_mut(scene, (PxActor*)sphere, null);
 
-        // boxes
-        for (var i = 0; i < 30; i++)
+        // capsule
+        var capsuleVec = new PxVec3
         {
-            var boxVec = new PxVec3
-            {
-                x = 1f + i * 3.05f,
-                y = 1.5f,
-                z = 0.0f
-            };
+            x = 5.0f,
+            y = 5.0f,
+            z = 0.0f
+        };
 
-            var boxTransform1 = PxTransform_new_1(&boxVec);
-            var boxTransform2 = PxTransform_new_2(PxIDENTITY.PxIdentity);
-            var boxGeo = PxBoxGeometry_new(0.5f, 1.5f, 1.0f);
+        var capsuleRotation = new PxVec3 { x = 0, y = 0, z = 1.0f };
+        var capsuleOrientation = PxQuat_new_4((float)Math.PI / 2, &capsuleRotation);
 
-            physics->CreateShapeMut(
-                (PxGeometry*)&boxGeo,
-                material,
-                false,
-                PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
+        var capsuleTransform = PxTransform_new_1(&capsuleVec);
+        var capsuleShapeOffset = PxTransform_new_3(&capsuleOrientation);
+        var capsuleGeo = PxCapsuleGeometry_new(1.0f, 2.0f);
 
-            var box = phys_PxCreateDynamic(
-                physics,
-                &boxTransform1,
-                (PxGeometry*)&boxGeo,
-                material,
-                10.0f,
-                &boxTransform2);
+        physics->CreateShapeMut(
+            (PxGeometry*)&capsuleGeo,
+            material,
+            false,
+            PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
 
-            PxScene_addActor_mut(scene, (PxActor*)box, null);
-        }
+        var capsule = phys_PxCreateDynamic(
+            physics,
+            &capsuleTransform,
+            (PxGeometry*)&capsuleGeo,
+            material,
+            10.0f,
+            &capsuleShapeOffset);
+
+        PxScene_addActor_mut(scene, (PxActor*)capsule, null);
+
+        // box1
+        var box1Position = new PxVec3
+        {
+            x = -5.0f,
+            y = 5.0f,
+            z = 0.0f
+        };
+
+        var box1Transform = PxTransform_new_1(&box1Position);
+        var box1ShapeOffset = PxTransform_new_2(PxIDENTITY.PxIdentity);
+        var box1Geometry = PxBoxGeometry_new(1.0f, 1.0f, 1.0f);
+
+        physics->CreateShapeMut(
+            (PxGeometry*)&box1Geometry,
+            material,
+            false,
+            PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
+
+        var box1 = phys_PxCreateDynamic(
+            physics,
+            &box1Transform,
+            (PxGeometry*)&box1Geometry,
+            material,
+            1.0f,
+            &box1ShapeOffset);
+
+        PxScene_addActor_mut(scene, (PxActor*)box1, null);
+
+        // box2
+        var box2Position = new PxVec3
+        {
+            x = -5.0f,
+            y = 5.0f,
+            z = -5.0f
+        };
+
+        var box2Transform = PxTransform_new_1(&box2Position);
+        var box2ShapeOffset = PxTransform_new_2(PxIDENTITY.PxIdentity);
+        var box2Geometry = PxBoxGeometry_new(1.0f, 1.0f, 1.0f);
+
+        physics->CreateShapeMut(
+            (PxGeometry*)&box2Geometry,
+            material,
+            false,
+            PxShapeFlags.Visualization | PxShapeFlags.SceneQueryShape | PxShapeFlags.SimulationShape);
+
+        var box2 = phys_PxCreateStatic(
+            physics,
+            &box2Transform,
+            (PxGeometry*)&box2Geometry,
+            material,
+            &box2ShapeOffset);
+
+        PxScene_addActor_mut(scene, (PxActor*)box2, null);
 
         // simulate
         Console.WriteLine("Start simulate");
 
-        for (var i = 0; i < 1400; i++)
+        for (var i = 0; i < 100; i++)
         {
             PxScene_simulate_mut(scene, 1.0f / 30.0f, null, null, 0, true);
             uint error = 0;
