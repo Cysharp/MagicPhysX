@@ -430,7 +430,6 @@ public unsafe class Rigidbody : RigidActor
     ///   <para>Adds a force to the Rigidbody.</para>
     /// </summary>
     /// <param name="force">Force vector in world coordinates.</param>
-    /// <param name="mode">Type of force to apply.</param>
     public void AddForce(Vector3 force)
     {
         RigidBody.AddForceMut(force.AsPxPointer(), PxForceMode.Force, autowake: true);
@@ -465,7 +464,6 @@ public unsafe class Rigidbody : RigidActor
     ///   <para>Adds a force to the rigidbody relative to its coordinate system.</para>
     /// </summary>
     /// <param name="force">Force vector in local coordinates.</param>
-    /// <param name="mode">Type of force to apply.</param>
     public void AddRelativeForce(Vector3 force)
     {
         AddRelativeForce(force, ForceMode.Force);
@@ -497,7 +495,6 @@ public unsafe class Rigidbody : RigidActor
     ///   <para>Adds a torque to the rigidbody.</para>
     /// </summary>
     /// <param name="torque">Torque vector in world coordinates.</param>
-    /// <param name="mode">The type of torque to apply.</param>
     public void AddTorque(Vector3 torque)
     {
         RigidBody.AddTorqueMut(torque.AsPxPointer(), PxForceMode.Force, autowake: true);
@@ -532,7 +529,6 @@ public unsafe class Rigidbody : RigidActor
     ///   <para>Adds a torque to the rigidbody relative to its coordinate system.</para>
     /// </summary>
     /// <param name="torque">Torque vector in local coordinates.</param>
-    /// <param name="mode">Type of force to apply.</param>
     public void AddRelativeTorque(Vector3 torque)
     {
         AddRelativeTorque(torque, ForceMode.Force);
@@ -566,7 +562,6 @@ public unsafe class Rigidbody : RigidActor
     /// </summary>
     /// <param name="force">Force vector in world coordinates.</param>
     /// <param name="position">Position in world coordinates.</param>
-    /// <param name="mode">Type of force to apply.</param>
     public void AddForceAtPosition(Vector3 force, Vector3 position)
     {
         RigidBody.ExtAddForceAtPos(force.AsPxPointer(), position.AsPxPointer(), PxForceMode.Force, wakeup: true);

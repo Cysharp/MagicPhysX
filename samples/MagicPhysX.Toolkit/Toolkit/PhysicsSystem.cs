@@ -34,6 +34,8 @@ public sealed unsafe class PhysicsSystem : IDisposable
 
     PhysicsSystem(bool enablePvd, string pvdIp, int pvdPort)
     {
+        this.enablePvd = enablePvd;
+
         if (!enablePvd)
         {
             this.physics = physx_create_physics(PhysicsFoundation.GetFoundation());
