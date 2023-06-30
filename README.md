@@ -145,7 +145,7 @@ if (pvdClient != null)
 }
 ```
 
-PhysicsSystem Samples
+Toolkit Sample
 ---
 C API is slightly complex in C# usage. Here is the sample of high level framework, PhysicsSystem.
 
@@ -173,7 +173,7 @@ unsafe
 }
 ```
 
-Code sample is available in [TODO:link](linklinklink)
+Code sample is available in [MagicPhysX.Toolkit](https://github.com/Cysharp/MagicPhysX/tree/main/samples/MagicPhysX.Toolkit).
 
 Native Build Instruction
 ---
