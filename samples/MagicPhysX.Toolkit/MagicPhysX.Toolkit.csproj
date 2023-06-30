@@ -5,12 +5,13 @@
         <TargetFramework>net7.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <RootNamespace>MagicPhysX</RootNamespace>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <IsPackable>false</IsPackable>
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\MagicPhysX\MagicPhysX.csproj" />
+      <ProjectReference Include="..\..\src\MagicPhysX\MagicPhysX.csproj" />
     </ItemGroup>
 
 </Project>

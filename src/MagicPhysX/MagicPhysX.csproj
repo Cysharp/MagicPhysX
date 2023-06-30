@@ -6,9 +6,13 @@
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+        
+        <PackageTags>physics</PackageTags>
+        <Description>.NET PhysX 5 binding to all platforms(win, osx, linux) for 3D engine, deep learning, dedicated server of gaming.</Description>
     </PropertyGroup>
 
     <ItemGroup>
+        <None Include="../../Icon.png" Pack="true" PackagePath="/" />
         <PackageReference Include="csbindgen" Version="1.7.3">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

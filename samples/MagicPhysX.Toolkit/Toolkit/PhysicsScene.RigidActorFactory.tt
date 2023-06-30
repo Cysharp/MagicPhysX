@@ -1,0 +1,43 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+<#
+    var bodyTypes = new[]{
+        new { Name = "Sphere", New = "new", Parameters = new[] { ("float", "radius") } },
+        new { Name = "Box", New = "new_1", Parameters = new[] { ("Vector3", "halfExtent") } },
+        new { Name = "Capsule", New = "new", Parameters = new[] { ("float", "radius"), ("float", "halfHeight") } },
+    };
+    var joinParameter1 = ((string, string)[] xs) => string.Join(", ", xs.Select(x => x.Item1 + " " + x.Item2));
+    var joinParameter2 = ((string, string)[] xs) => string.Join(", ", xs.Select(x => x.Item2));
+#>
+using MagicPhysX;
+using static MagicPhysX.NativeMethods;
+
+namespace MagicPhysX.Toolkit;
+
+public sealed unsafe partial class PhysicsScene
+{
+<# foreach(var item in bodyTypes) { #>
+    public Rigidbody AddDynamic<#= item.Name #>(<#= joinParameter1(item.Parameters) #>, Vector3 position, Quaternion rotation, float density, PxMaterial* material = null)
+    {
+        var geometry = Px<#= item.Name #>Geometry_<#= item.New #>(<#= joinParameter2(item.Parameters) #>);
+        return AddDynamicGeometry((PxGeometry*)&geometry, position, rotation, density, material, ColliderType.<#= item.Name #>);
+    }
+
+    public Rigidbody AddKinematic<#= item.Name #>(<#= joinParameter1(item.Parameters) #>, Vector3 position, Quaternion rotation, float density, PxMaterial* material = null)
+    {
+        var geometry = Px<#= item.Name #>Geometry_<#= item.New #>(<#= joinParameter2(item.Parameters) #>);
+        return AddKinematicGeometry((PxGeometry*)&geometry, position, rotation, density, material, ColliderType.<#= item.Name #>);
+    }
+
+    public Rigidstatic AddStatic<#= item.Name #>(<#= joinParameter1(item.Parameters) #>, Vector3 position, Quaternion rotation, PxMaterial* material = null)
+    {
+        var geometry = Px<#= item.Name #>Geometry_<#= item.New #>(<#= joinParameter2(item.Parameters) #>);
+        return AddStaticGeometry((PxGeometry*)&geometry, position, rotation, material, ColliderType.<#= item.Name #>);
+    }
+
+<# } #>
+}

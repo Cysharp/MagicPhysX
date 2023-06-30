@@ -11,30 +11,7 @@ env:
   GIT_TAG: ${{ github.event.inputs.tag }}
 
 jobs:
-  build-and-push-rust:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v3
-      - run: cargo build --verbose
-      - run: cargo test update_package_version -- ${{ inputs.tag }} --nocapture
-      - run: |
-          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
-          git commit -m "Update cargo.toml version to ${{ env.GIT_TAG }}" -a
-      - run: cargo publish --manifest-path csbindgen/Cargo.toml
-        env:
-          CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}
-      - run: git tag ${{ env.GIT_TAG }}
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
-          tags: true
-
-  build-dotnet:
-    needs: [build-and-push-rust]
+  nuget-push-dotnet:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -44,11 +21,12 @@ jobs:
           dotnet-version: 7.0.x
       # pack nuget
       - run: dotnet build -c Release -p:Version=${{ inputs.tag }}
+      - run: dotnet test -c Release --no-build
       - run: dotnet pack -c Release --no-build -p:Version=${{ inputs.tag }} -o ./publish
       - run: dotnet nuget push "./publish/*.nupkg" -s https://www.nuget.org/api/v2/package -k ${{ secrets.NUGET_KEY }}
 
   create-release:
-    needs: [build-dotnet, build-and-push-rust]
+    needs: [nuget-push-dotnet]
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:

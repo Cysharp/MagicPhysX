@@ -1,5 +1,5 @@
 # MagicPhysX
-.NET PhysX 5 binding to all platforms(win, osx, linux) for 3D engine, deep learning, dedicated server of gaming. This library is built on top of [NVIDIA PhysX 5](https://github.com/NVIDIA-Omniverse/PhysX) and [physx-rs](https://github.com/EmbarkStudios/physx-rs).
+.NET PhysX 5 binding to all platforms(win-x64, osx-x64, osx-arm64, linux-x64, linux-arm64) for 3D engine, deep learning, dedicated server of gaming. This library is built on top of [NVIDIA PhysX 5](https://github.com/NVIDIA-Omniverse/PhysX) and [physx-rs](https://github.com/EmbarkStudios/physx-rs).
 
 Use case:
 * 3D View for MAUI, WPF, Avalonia
@@ -97,7 +97,11 @@ MagicPhysX uses [physx-rs](https://github.com/EmbarkStudios/physx-rs) C binding(
 
 ### PhysX Visual Debugger
 
-MagicPhysX can enable [PhysX Visual Debugger](https://developer.nvidia.com/physx-visual-debugger) to debug physcs scene. To use pvd, add this instruction on scene init.
+MagicPhysX can enable [PhysX Visual Debugger](https://developer.nvidia.com/physx-visual-debugger) to debug physcs scene.
+
+![image](https://github.com/Cysharp/MagicPhysX/assets/46207/83b6b7c7-c8d6-4ab3-bd5e-f85905831d43)
+
+To use pvd, add this instruction on scene init.
 
 ```csharp
 var foundation = physx_create_foundation();
@@ -141,31 +145,35 @@ if (pvdClient != null)
 }
 ```
 
-PhysicsSystem Samples
+Toolkit Sample
 ---
 C API is slightly complex in C# usage. Here is the sample of high level framework, PhysicsSystem.
 
 ```csharp
-using MagicPhysX;
+using MagicPhysX.Toolkit;
+using System.Numerics;
 
-using var physics = new PhysicsSystem(enablePvd: false);
-using var scene = physics.CreateScene();
-
-var material = physics.CreateMaterial(0.5f, 0.5f, 0.6f);
-
-var plane = scene.AddStaticPlane(0.0f, 1.0f, 0.0f, 0.0f, new Vector3(0, 0, 0), Quaternion.Identity, material);
-var sphere = scene.AddDynamicSphere(1.0f, new Vector3(0.0f, 10.0f, 0.0f), Quaternion.Identity, 10.0f, material);
-
-for (var i = 0; i < 200; i++)
+unsafe
 {
-    scene.Update(1.0f / 30.0f);
+    using var physics = new PhysicsSystem(enablePvd: false);
+    using var scene = physics.CreateScene();
 
-    var position = sphere.transform.position;
-    Console.WriteLine($"{i:D2} : x={position.x:F6}, y={position.y:F6}, z={position.z:F6}");
+    var material = physics.CreateMaterial(0.5f, 0.5f, 0.6f);
+
+    var plane = scene.AddStaticPlane(0.0f, 1.0f, 0.0f, 0.0f, new Vector3(0, 0, 0), Quaternion.Identity, material);
+    var sphere = scene.AddDynamicSphere(1.0f, new Vector3(0.0f, 10.0f, 0.0f), Quaternion.Identity, 10.0f, material);
+
+    for (var i = 0; i < 200; i++)
+    {
+        scene.Update(1.0f / 30.0f);
+
+        var position = sphere.transform.position;
+        Console.WriteLine($"{i:D2} : x={position.X:F6}, y={position.Y:F6}, z={position.Z:F6}");
+    }
 }
 ```
 
-Code sample is available in [TODO:link](linklinklink)
+Code sample is available in [MagicPhysX.Toolkit](https://github.com/Cysharp/MagicPhysX/tree/main/samples/MagicPhysX.Toolkit).
 
 Native Build Instruction
 ---
@@ -173,6 +181,8 @@ require [Rust](https://www.rust-lang.org/).
 
 Open directory `src\libmagicphysx`.
 Run `cargo build`.
+
+Native binaries in package is built on GitHub Actions [build-physx.yml](https://github.com/Cysharp/MagicPhysX/blob/main/.github/workflows/build-physx.yml). If we need to update physx-sys(PhysX) version, run this GitHub Actions to input physxversion.
 
 License
 ---
