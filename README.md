@@ -92,6 +92,8 @@ PxDefaultCpuDispatcher_release_mut(dispatcher);
 PxPhysics_release_mut(physics);
 ```
 
+Other samples(`FixedJoint`, `RaycastSingle`, `BricksDoubleDomino`) are exist in [ConsoleSandbox](https://github.com/Cysharp/MagicPhysX/tree/main/sandbox/ConsoleSandbox).
+
 ### Document
 
 MagicPhysX uses [physx-rs](https://github.com/EmbarkStudios/physx-rs) C binding([physx-sys](https://github.com/EmbarkStudios/physx-rs/tree/main/physx-sys)). You can refer these document.
