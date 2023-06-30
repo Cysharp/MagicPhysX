@@ -16,7 +16,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <!--<None Include="runtimes\win-x64\native\libmagicphysx.dll">
+        <None Include="runtimes\linux-arm64\native\libmagicphysx.so">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <None Include="runtimes\linux-x64\native\libmagicphysx.so">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </None>
         <None Include="runtimes\osx-arm64\native\libmagicphysx.dylib">
@@ -24,19 +27,19 @@
         </None>
         <None Include="runtimes\osx-x64\native\libmagicphysx.dylib">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>-->
-        <!--<None Include="runtimes\linux-arm64\native\libphysx.so">
+        </None>
+        <None Include="runtimes\win-x64\native\libmagicphysx.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-        </None>-->
+        </None>
     </ItemGroup>
 
     <!-- for debug perpose, if exists in debug, copy it -->
     <ItemGroup Condition="'$(Configuration)' == 'Debug' and Exists('../libmagicphysx/target/debug/magicphysx.dll')">
-        <None Include="../libmagicphysx/target/debug/magicphysx.dll" LinkBase="debug\">
+        <None Include="../libmagicphysx/target/debug/magicphysx.dll">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>libmagicphysx.dll</Link>
         </None>
-        <None Include="../libmagicphysx/target/debug/magicphysx.pdb" LinkBase="debug\">
+        <None Include="../libmagicphysx/target/debug/magicphysx.pdb">
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
             <Link>libmagicphysx.pdb</Link>
         </None>
