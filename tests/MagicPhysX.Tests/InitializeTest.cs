@@ -1,4 +1,5 @@
-﻿using static MagicPhysX.NativeMethods;
+﻿using System.Text;
+using static MagicPhysX.NativeMethods;
 
 namespace MagicPhysX.Tests;
 
@@ -15,7 +16,7 @@ public class BasicTest
         var pvd = phys_PxCreatePvd(foundation);
         (pvd != (PxPvd*)IntPtr.Zero).Should().BeTrue();
 
-        fixed (byte* bytePointer = "127.0.0.1"u8.ToArray())
+        fixed (byte* bytePointer = Encoding.UTF8.GetBytes("127.0.0.1"))
         {
             var transport = phys_PxDefaultPvdSocketTransportCreate(bytePointer, 5425, 10);
             pvd->ConnectMut(transport, PxPvdInstrumentationFlags.All);

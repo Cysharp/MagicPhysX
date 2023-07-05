@@ -1,5 +1,6 @@
 ﻿using MagicPhysX;
 using static MagicPhysX.NativeMethods;
+using System.Text;
 
 namespace ConsoleSandbox;
 
@@ -12,7 +13,7 @@ public static class BricksDoubleDomino
         // create pvd
         var pvd = phys_PxCreatePvd(foundation);
 
-        fixed (byte* bytePointer = "127.0.0.1"u8.ToArray())
+        fixed (byte* bytePointer = Encoding.UTF8.GetBytes("127.0.0.1"))
         {
             var transport = phys_PxDefaultPvdSocketTransportCreate(bytePointer, 5425, 10);
             pvd->ConnectMut(transport, PxPvdInstrumentationFlags.All);
