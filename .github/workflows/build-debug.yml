@@ -10,27 +10,27 @@ on:
       - "main"
 
 jobs:
-  win-x64:
-    runs-on: windows-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v3
-      - uses: Cysharp/Actions/.github/actions/setup-dotnet@main
-        with:
-          dotnet-version: 7.0.x
-      - run: dotnet build -c Debug
-      - run: dotnet test -c Debug --no-build
+  # win-x64:
+  #   runs-on: windows-latest
+  #   timeout-minutes: 10
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: Cysharp/Actions/.github/actions/setup-dotnet@main
+  #       with:
+  #         dotnet-version: 7.0.x
+  #     - run: dotnet build -c Debug
+  #     - run: dotnet test -c Debug --no-build
 
-  linux-x64:
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      - uses: actions/checkout@v3
-      - uses: Cysharp/Actions/.github/actions/setup-dotnet@main
-        with:
-          dotnet-version: 7.0.x
-      - run: dotnet build -c Debug
-      - run: dotnet test -c Debug --no-build
+  # linux-x64:
+  #   runs-on: ubuntu-latest
+  #   timeout-minutes: 10
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: Cysharp/Actions/.github/actions/setup-dotnet@main
+  #       with:
+  #         dotnet-version: 7.0.x
+  #     - run: dotnet build -c Debug
+  #     - run: dotnet test -c Debug --no-build
 
   # linux-arm64:
   #   runs-on: ubuntu-latest
@@ -45,14 +45,24 @@ jobs:
   #     - run: dotnet build -c Debug
   #     - run: dotnet test -c Debug --no-build
 
-  osx-x64:
-    runs-on: macos-latest
+  # osx-x64:
+  #   runs-on: macos-latest
+  #   timeout-minutes: 10
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: Cysharp/Actions/.github/actions/setup-dotnet@main
+  #       with:
+  #         dotnet-version: 7.0.x
+  #     - run: dotnet build -c Debug
+  #     - run: dotnet test -c Debug --no-build
+
+  linux-arm64:
+    runs-on: buildjet-2vcpu-ubuntu-2204-arm
     timeout-minutes: 10
     steps:
       - uses: actions/checkout@v3
       - uses: Cysharp/Actions/.github/actions/setup-dotnet@main
         with:
-          dotnet-version: 7.0.x
+          dotnet-version: 6.0
       - run: dotnet build -c Debug
       - run: dotnet test -c Debug --no-build
-
