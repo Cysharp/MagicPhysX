@@ -17,11 +17,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - run: cargo test update_package_version -- ${{ inputs.physxversion }} --nocapture
-      
+
       - name: Check update
         id: check_update
-        run: git diff --exit-code || echo "changed=1" 
-      
+        run: git diff --exit-code || echo "changed=1"
+
       - name: Commit files
         id: commit
         if: ${{ steps.check_update.outputs.changed == '1' }}
@@ -30,7 +30,7 @@ jobs:
           git config --local user.name "github-actions[bot]"
           git add --all
           git commit -m "Update cargo.toml physx-sys version to ${{ inputs.physxversion }}" -a
-      
+
       - name: Push changes
         if: ${{ steps.check_update.outputs.changed == '1' }}
         uses: ad-m/github-push-action@master
@@ -56,6 +56,7 @@ jobs:
         with:
           name: win-x64
           path: ./src/libmagicphysx/target/x86_64-pc-windows-msvc/release/magicphysx.dll
+          retention-days: 1
 
   linux-x64:
     needs: [update-package]
@@ -72,6 +73,7 @@ jobs:
         with:
           name: linux-x64
           path: ./src/libmagicphysx/target/x86_64-unknown-linux-gnu/release/libmagicphysx.so
+          retention-days: 1
 
   linux-arm64:
     needs: [update-package]
@@ -93,6 +95,7 @@ jobs:
         with:
           name: linux-arm64
           path: ./src/libmagicphysx/target/aarch64-unknown-linux-gnu/release/libmagicphysx.so
+          retention-days: 1
 
   osx-x64:
     needs: [update-package]
@@ -109,6 +112,7 @@ jobs:
         with:
           name: osx-x64
           path: ./src/libmagicphysx/target/x86_64-apple-darwin/release/libmagicphysx.dylib
+          retention-days: 1
 
   osx-arm64:
     needs: [update-package]
@@ -125,6 +129,7 @@ jobs:
         with:
           name: osx-arm64
           path: ./src/libmagicphysx/target/aarch64-apple-darwin/release/libmagicphysx.dylib
+          retention-days: 1
 
   # download binary and git push
 
