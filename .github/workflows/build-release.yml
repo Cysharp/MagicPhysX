@@ -6,12 +6,14 @@ on:
       tag:
         description: "tag: git tag you want create. (sample 1.0.0)"
         required: true
-
-env:
-  GIT_TAG: ${{ github.event.inputs.tag }}
+      dry-run:
+        description: "dry-run: true will never create relase/nuget."
+        required: true
+        default: false
+        type: boolean
 
 jobs:
-  nuget-push-dotnet:
+  build-dotnet:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -23,20 +25,19 @@ jobs:
       - run: dotnet build -c Release -p:Version=${{ inputs.tag }}
       - run: dotnet test -c Release --no-build
       - run: dotnet pack -c Release --no-build -p:Version=${{ inputs.tag }} -o ./publish
-      - run: dotnet nuget push "./publish/*.nupkg" -s https://www.nuget.org/api/v2/package -k ${{ secrets.NUGET_KEY }}
+      # Store artifacts.
+      - uses: actions/upload-artifact@v2
+        with:
+          name: nuget
+          path: ./publish/
 
   create-release:
-    needs: [nuget-push-dotnet]
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    steps:
-      # Create Releases
-      - uses: actions/create-release@v1
-        id: create_release
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: ${{ env.GIT_TAG }}
-          release_name: Ver.${{ env.GIT_TAG }}
-          draft: true
-          prerelease: false
+    needs: [build-dotnet]
+    uses: Cysharp/Actions/.github/workflows/create-release.yaml@main
+    with:
+      commit-id: ''
+      tag: ${{ inputs.tag }}
+      dry-run: ${{ inputs.dry-run }}
+      nuget-push: true
+      release-upload: false
+    secrets: inherit
