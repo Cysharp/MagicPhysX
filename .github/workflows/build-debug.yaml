@@ -11,6 +11,8 @@ on:
 
 jobs:
   win-x64:
+    permissions:
+      contents: read
     runs-on: windows-latest
     timeout-minutes: 10
     steps:
@@ -22,7 +24,9 @@ jobs:
       - run: dotnet test -c Debug --no-build
 
   linux-x64:
-    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    runs-on: ubuntu-24.04
     timeout-minutes: 10
     steps:
       - uses: Cysharp/Actions/.github/actions/checkout@main
@@ -33,7 +37,10 @@ jobs:
       - run: dotnet test -c Debug --no-build
 
   # linux-arm64:
-  #   runs-on: ubuntu-latest
+  #   permissions:
+  #     contents: read
+  #   runs-on: ubuntu-24.04
+  #   timeout-minutes: 10
   #   container:
   #     image: mcr.microsoft.com/dotnet/aspnet:7.0.8-jammy-arm64v8
   #   timeout-minutes: 30
@@ -46,6 +53,8 @@ jobs:
   #     - run: dotnet test -c Debug --no-build
 
   osx-x64:
+    permissions:
+      contents: read
     runs-on: macos-latest
     timeout-minutes: 10
     steps:
