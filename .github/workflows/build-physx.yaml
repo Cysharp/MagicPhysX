@@ -109,7 +109,7 @@ jobs:
     needs: [update-package]
     permissions:
       contents: write
-    runs-on: macos-latest
+    runs-on: macos-15
     timeout-minutes: 30
     defaults:
       run:
@@ -128,7 +128,7 @@ jobs:
     needs: [update-package]
     permissions:
       contents: write
-    runs-on: macos-latest
+    runs-on: macos-15
     timeout-minutes: 30
     defaults:
       run:

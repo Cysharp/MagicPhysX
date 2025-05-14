@@ -55,7 +55,7 @@ jobs:
   osx-x64:
     permissions:
       contents: read
-    runs-on: macos-latest
+    runs-on: macos-15
     timeout-minutes: 10
     steps:
       - uses: Cysharp/Actions/.github/actions/checkout@main
